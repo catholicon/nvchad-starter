@@ -1,6 +1,10 @@
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
+-- Tell augment property to point to ACC before its
+-- plugin loads
+vim.g.augment_workspace_folders = {"~/depot/git/campaign/ac"}
+
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 

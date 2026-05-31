@@ -5,6 +5,12 @@ return {
     opts = require "configs.conform",
   },
 
+  -- Setup augment code
+  {
+    "augmentcode/augment.vim",
+    lazy = false,
+  },
+  --
   -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
