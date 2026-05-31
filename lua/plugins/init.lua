@@ -111,21 +111,6 @@ return {
     },
   },
 
-  -- Code outline sidebar (functions, classes, methods)
-  {
-    "stevearc/aerial.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
-    keys = { "<leader>a" },
-    config = function()
-      require("aerial").setup {
-        on_attach = function(bufnr)
-          vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr, desc = "Aerial prev symbol" })
-          vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr, desc = "Aerial next symbol" })
-        end,
-      }
-    end,
-  },
-
   -- Markdown presentations inside Neovim
   {
     "tjdevries/present.nvim",
