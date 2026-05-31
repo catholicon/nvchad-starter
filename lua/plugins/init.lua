@@ -161,6 +161,17 @@ return {
     },
   },
 
+  -- Sticky context header at top of window (shows enclosing function/class)
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    event = "BufReadPost",
+    opts = {
+      max_lines = 3,        -- show at most 3 context lines
+      separator = "─",      -- subtle separator line between context and code
+    },
+  },
+
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
