@@ -6,6 +6,7 @@ local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP code action" })
+map("n", "K", function() vim.lsp.buf.hover({ border = "rounded" }) end, { desc = "LSP hover" })
 map("i", "jk", "<ESC>")
 
 -- Scroll with cursor centered
