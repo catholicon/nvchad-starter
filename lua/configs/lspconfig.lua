@@ -1,5 +1,9 @@
 require("nvchad.configs.lspconfig").defaults()
 
+vim.diagnostic.config {
+  virtual_text = { source = true },
+}
+
 -- read :h vim.lsp.config for changing options of lsp servers
 
 vim.lsp.enable {

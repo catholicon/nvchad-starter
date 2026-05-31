@@ -40,7 +40,6 @@ return {
         "luacheck",
         "eslint_d",
         "golangci-lint",
-        "cpplint",
         "shellcheck",
         "yamllint",
         "markdownlint",
@@ -109,6 +108,17 @@ return {
     opts = {
       suppressed_dirs = { "~/", "~/Downloads", "/" },
     },
+  },
+
+  -- Harpoon: quick-access file bookmarks per project
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    lazy = false,
+    config = function()
+      require("harpoon"):setup()
+    end,
   },
 
   -- Markdown presentations inside Neovim

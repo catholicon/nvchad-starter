@@ -26,6 +26,30 @@ map("n", "<leader>dr", function() require("dap").repl.open() end,    { desc = "D
 -- Present (markdown presentations)
 map("n", "<leader>pp", "<cmd>PresentStart<CR>", { desc = "Start presentation" })
 
+-- Free NvChad's <A-h/v/i> terminal toggles (using <leader>h/v instead)
+vim.keymap.del({ "n", "t" }, "<A-v>")
+vim.keymap.del({ "n", "t" }, "<A-h>")
+vim.keymap.del({ "n", "t" }, "<A-i>")
+
+-- Replace <C-h/j/k/l> window navigation (terminal conflicts) with <A-h/j/k/l>
+vim.keymap.del("n", "<C-h>")
+vim.keymap.del("n", "<C-j>")
+vim.keymap.del("n", "<C-k>")
+vim.keymap.del("n", "<C-l>")
+map("n", "<A-h>", "<C-w>h", { desc = "switch window left" })
+map("n", "<A-j>", "<C-w>j", { desc = "switch window down" })
+map("n", "<A-k>", "<C-w>k", { desc = "switch window up" })
+map("n", "<A-l>", "<C-w>l", { desc = "switch window right" })
+
+-- Harpoon
+local harpoon = require "harpoon"
+map("n", "<leader>ha", function() harpoon:list():add() end,            { desc = "Harpoon add file" })
+map("n", "<leader>hm", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Harpoon menu" })
+map("n", "<leader>1",  function() harpoon:list():select(1) end,        { desc = "Harpoon file 1" })
+map("n", "<leader>2",  function() harpoon:list():select(2) end,        { desc = "Harpoon file 2" })
+map("n", "<leader>3",  function() harpoon:list():select(3) end,        { desc = "Harpoon file 3" })
+map("n", "<leader>4",  function() harpoon:list():select(4) end,        { desc = "Harpoon file 4" })
+
 -- mapping augment commands
 map({"n", "v"}, "<leader>ac", ":Augment chat<CR>")
 map("n", "<leader>an", ":Augment chat-new<CR>")

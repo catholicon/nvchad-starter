@@ -12,9 +12,7 @@ lint.linters_by_ft = {
   python = { "ruff" },
   -- go
   go = { "golangci-lint" },
-  -- c / c++
-  c = { "cpplint" },
-  cpp = { "cpplint" },
+  -- c / c++ diagnostics handled by clangd LSP
   -- bash
   sh = { "shellcheck" },
   bash = { "shellcheck" },
