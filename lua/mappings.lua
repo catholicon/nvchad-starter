@@ -5,6 +5,7 @@ require "nvchad.mappings"
 local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
+map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP code action" })
 map("i", "jk", "<ESC>")
 
 -- Scroll with cursor centered
