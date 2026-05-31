@@ -55,6 +55,38 @@ dap.configurations.typescript = js_cfg
 dap.configurations.javascriptreact = js_cfg
 dap.configurations.typescriptreact = js_cfg
 
+-- ── Python (debugpy) ──────────────────────────────────────────────────────────
+dap.adapters.python = {
+  type = "executable",
+  command = vim.fn.stdpath "data" .. "/mason/packages/debugpy/venv/bin/python",
+  args = { "-m", "debugpy.adapter" },
+}
+dap.configurations.python = {
+  {
+    type = "python",
+    request = "launch",
+    name = "Launch file",
+    program = "${file}",
+    pythonPath = function()
+      local venv = os.getenv "VIRTUAL_ENV"
+      if venv then return venv .. "/bin/python" end
+      return "python3"
+    end,
+  },
+  {
+    type = "python",
+    request = "launch",
+    name = "Launch with args",
+    program = "${file}",
+    args = function() return vim.split(vim.fn.input "Args: ", " ") end,
+    pythonPath = function()
+      local venv = os.getenv "VIRTUAL_ENV"
+      if venv then return venv .. "/bin/python" end
+      return "python3"
+    end,
+  },
+}
+
 -- ── Bash (bash-debug-adapter) ─────────────────────────────────────────────────
 local bash_debug = vim.fn.stdpath "data" .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir"
 dap.adapters.sh = {

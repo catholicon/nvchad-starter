@@ -9,6 +9,8 @@ vim.lsp.enable {
   "html", "cssls", "ts_ls",
   -- systems (rust_analyzer omitted — managed by rustaceanvim)
   "gopls",
+  -- python
+  "pyright",
   -- scripting / config
   "bashls", "jsonls", "yamlls",
   -- docs

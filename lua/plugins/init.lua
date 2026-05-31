@@ -30,10 +30,12 @@ return {
         "lua-language-server",
         "html-lsp", "css-lsp", "typescript-language-server",
         "clangd", "gopls", "rust-analyzer",
+        "pyright",
         "bash-language-server", "json-lsp", "yaml-language-server",
         "marksman",
         -- formatters
         "stylua", "prettier", "clang-format", "goimports", "shfmt",
+        "ruff",   -- python formatter + linter (one tool for both)
         -- linters
         "luacheck",
         "eslint_d",
@@ -47,6 +49,7 @@ return {
         "codelldb",           -- rust / c / c++
         "js-debug-adapter",   -- javascript / typescript
         "bash-debug-adapter", -- bash
+        "debugpy",            -- python
       },
     },
     config = function(_, opts)
@@ -169,7 +172,7 @@ return {
         -- systems
         "c", "cpp", "go", "rust",
         -- scripting / config
-        "bash", "json", "yaml",
+        "python", "bash", "json", "yaml",
         -- docs
         "markdown", "markdown_inline",
       },

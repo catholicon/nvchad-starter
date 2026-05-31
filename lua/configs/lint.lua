@@ -8,6 +8,8 @@ lint.linters_by_ft = {
   typescript = { "eslint_d" },
   javascriptreact = { "eslint_d" },
   typescriptreact = { "eslint_d" },
+  -- python (ruff replaces flake8 + pylint + isort)
+  python = { "ruff" },
   -- go
   go = { "golangci-lint" },
   -- c / c++

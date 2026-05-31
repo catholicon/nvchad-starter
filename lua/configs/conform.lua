@@ -12,6 +12,8 @@ local options = {
     json = { "prettier" },
     yaml = { "prettier" },
     markdown = { "prettier" },
+    -- python (ruff_format replaces black + isort)
+    python = { "ruff_format" },
     -- go
     go = { "goimports", "gofmt" },
     -- rust (rustfmt ships with the toolchain, not via Mason)
