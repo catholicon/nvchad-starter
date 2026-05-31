@@ -1,6 +1,22 @@
 require("nvchad.configs.lspconfig").defaults()
 
-local servers = { "html", "cssls" }
-vim.lsp.enable(servers)
+-- read :h vim.lsp.config for changing options of lsp servers
 
--- read :h vim.lsp.config for changing options of lsp servers 
+vim.lsp.enable {
+  -- lua
+  "lua_ls",
+  -- web
+  "html", "cssls", "ts_ls",
+  -- systems
+  "gopls", "rust_analyzer",
+  -- scripting / config
+  "bashls", "jsonls", "yamlls",
+  -- docs
+  "marksman",
+}
+
+-- clangd needs explicit utf-16 offset encoding to avoid conflicts
+vim.lsp.config("clangd", {
+  cmd = { "clangd", "--offset-encoding=utf-16" },
+})
+vim.lsp.enable "clangd"
