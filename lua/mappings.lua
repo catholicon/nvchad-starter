@@ -21,6 +21,12 @@ map("n", "<leader>B",  function() require("dap").set_breakpoint(vim.fn.input "Br
 map("n", "<leader>du", function() require("dapui").toggle() end,     { desc = "DAP toggle UI" })
 map("n", "<leader>dr", function() require("dap").repl.open() end,    { desc = "DAP open REPL" })
 
+-- Aerial (code outline)
+map("n", "<leader>a", "<cmd>AerialToggle!<CR>", { desc = "Aerial toggle outline" })
+
+-- Present (markdown presentations)
+map("n", "<leader>pp", "<cmd>PresentStart<CR>", { desc = "Start presentation" })
+
 -- mapping augment commands
 map({"n", "v"}, "<leader>ac", ":Augment chat<CR>")
 map("n", "<leader>an", ":Augment chat-new<CR>")

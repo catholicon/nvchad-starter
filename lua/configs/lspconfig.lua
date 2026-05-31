@@ -7,8 +7,8 @@ vim.lsp.enable {
   "lua_ls",
   -- web
   "html", "cssls", "ts_ls",
-  -- systems
-  "gopls", "rust_analyzer",
+  -- systems (rust_analyzer omitted — managed by rustaceanvim)
+  "gopls",
   -- scripting / config
   "bashls", "jsonls", "yamlls",
   -- docs

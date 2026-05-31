@@ -93,6 +93,71 @@ return {
     end,
   },
 
+  -- Line number toggle (relative in normal, absolute in insert/unfocused)
+  {
+    "jeffkreeftmeijer/vim-numbertoggle",
+    lazy = false,
+  },
+
+  -- Session save/restore per working directory
+  {
+    "rmagatti/auto-session",
+    lazy = false,
+    opts = {
+      suppressed_dirs = { "~/", "~/Downloads", "/" },
+    },
+  },
+
+  -- Code outline sidebar (functions, classes, methods)
+  {
+    "stevearc/aerial.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+    keys = { "<leader>a" },
+    config = function()
+      require("aerial").setup {
+        on_attach = function(bufnr)
+          vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr, desc = "Aerial prev symbol" })
+          vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr, desc = "Aerial next symbol" })
+        end,
+      }
+    end,
+  },
+
+  -- Markdown presentations inside Neovim
+  {
+    "tjdevries/present.nvim",
+    cmd = "PresentStart",
+    config = function()
+      require("present").setup {}
+    end,
+  },
+
+  -- Rust LSP extras (hover actions, cargo commands, expand macros, runnables)
+  -- Manages rust-analyzer directly — do NOT enable rust_analyzer via vim.lsp.enable
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^5",
+    ft = "rust",
+    config = function()
+      vim.g.rustaceanvim = {
+        server = {
+          cmd = { vim.fn.stdpath "data" .. "/mason/bin/rust-analyzer" },
+        },
+      }
+    end,
+  },
+
+  -- Neovim Lua API completions (vim.*, vim.api, etc.) for lua_ls
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        { path = "luvit-meta/library", words = { "vim%.uv" } },
+      },
+    },
+  },
+
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
