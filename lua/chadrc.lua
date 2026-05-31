@@ -19,4 +19,8 @@ M.ui = {
   statusline = { enabled = false }, -- replaced by lualine
 }
 
+M.term = {
+  sizes = { vsp = 0.5 }, -- vertical split terminal: 50% of screen width (default is ~0.2)
+}
+
 return M
