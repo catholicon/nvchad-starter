@@ -161,6 +161,51 @@ return {
     },
   },
 
+  -- Statusline
+  {
+    "nvim-lualine/lualine.nvim",
+    lazy = false,
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("lualine").setup {
+        options = {
+          theme = "auto",            -- matches active NvChad colorscheme
+          globalstatus = true,
+          section_separators    = { left = "\u{E0B4}", right = "\u{E0B6}" }, -- filled half-circles
+          component_separators  = { left = "\u{E0B1}", right = "\u{E0B3}" }, -- thin arrows
+        },
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = { "branch", "diff" },
+          lualine_c = {
+            { "filename", path = 1 },   -- relative path
+            { "aerial" },               -- current symbol (function/class/method)
+          },
+          lualine_x = {
+            "diagnostics",
+            {
+              function()               -- LSP clients, excluding noise
+                local clients = vim.lsp.get_clients { bufnr = 0 }
+                local names = {}
+                local skip = { augment = true, ["null-ls"] = true }
+                for _, c in ipairs(clients) do
+                  if not skip[c.name:lower()] then
+                    table.insert(names, c.name)
+                  end
+                end
+                return #names > 0 and (" " .. table.concat(names, " ")) or ""
+              end,
+            },
+            { "encoding", cond = function() return vim.o.columns > 120 end },
+            "filetype",
+          },
+          lualine_y = { "progress" },
+          lualine_z = { "location" },
+        },
+      }
+    end,
+  },
+
   -- Sticky context header at top of window (shows enclosing function/class)
   {
     "nvim-treesitter/nvim-treesitter-context",
