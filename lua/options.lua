@@ -14,4 +14,7 @@ o.colorcolumn = "100"
 
 -- Visualize whitespace characters
 o.list = true
-o.listchars = "space:⋅,eol:↴"
+o.listchars = "space:⋅,eol:↵"
+
+-- Thicker, more visible window separators
+o.fillchars = "vert:┃,horiz:━,horizup:┻,horizdown:┳,vertleft:┫,vertright:┣,verthoriz:╋"
