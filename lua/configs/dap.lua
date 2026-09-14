@@ -35,10 +35,12 @@ local function guard_no_active_session()
   return false
 end
 
-local function maybe_engine_arg()
-  local engine = os.getenv "ENGINE"
+local function maybe_engine_env()
+  local engine = os.getenv "NL_JS_ENGINE" or os.getenv "ENGINE"
   if engine and engine ~= "" then
-    return "-engine:" .. engine
+    local env = vim.fn.environ()
+    env.NL_JS_ENGINE = engine
+    return env
   end
   return nil
 end
@@ -160,10 +162,7 @@ local function _run_autotest(category)
   end
   local instance = os.getenv "INSTANCE" or "autotest"
   local args = { "javascript", "-instance:" .. instance }
-  local engine_arg = maybe_engine_arg()
-  if engine_arg then
-    table.insert(args, engine_arg)
-  end
+  local env = maybe_engine_env()
   local cat = (category or ""):match("^%s*(.-)%s*$")
   if cat ~= "" then
     -- Only add -arg when a non-empty category was provided; an empty/blank input means "run all tests".
@@ -179,6 +178,7 @@ local function _run_autotest(category)
     program = resolve_nlserver(),
     args    = args,
     cwd     = nl .. "/test/autotest",
+    env     = env,
   }
   _last_autotest_cat = category
   _last_autotest_cfg = cfg
@@ -208,10 +208,7 @@ local function _run_javascript(path)
   end
   local instance = os.getenv "INSTANCE" or "autotest"
   local args = { "javascript", "-instance:" .. instance }
-  local engine_arg = maybe_engine_arg()
-  if engine_arg then
-    table.insert(args, engine_arg)
-  end
+  local env = maybe_engine_env()
   table.insert(args, "-file")
   table.insert(args, path)
   local cfg = {
@@ -221,6 +218,7 @@ local function _run_javascript(path)
     program = resolve_nlserver(),
     args    = args,
     cwd     = vim.fn.fnamemodify(nl, ":h"),
+    env     = env,
   }
   _last_javascript_path = path
   _last_javascript_cfg = cfg
