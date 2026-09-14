@@ -3,10 +3,14 @@
 -- M.run_last()    – re-run the last command without prompting
 -- M.run_autotest()      – prompt for autotest category and run
 -- M.run_last_autotest() – re-run the last autotest with the same category
+-- M.run_javascript()    – prompt for a JavaScript file path and run under nlserver
+-- M.run_last_javascript() – re-run the last JavaScript file
 local M = {}
-local _last_cmd = nil           -- session-scoped last raw command
-local _last_autotest_cat = nil  -- last autotest category
-local _last_autotest_cfg = nil  -- fully-resolved last autotest dap config
+local _last_cmd = nil               -- session-scoped last raw command
+local _last_autotest_cat = nil      -- last autotest category
+local _last_autotest_cfg = nil      -- fully-resolved last autotest dap config
+local _last_javascript_path = nil   -- last JavaScript file path
+local _last_javascript_cfg = nil    -- fully-resolved last javascript dap config
 
 local function has_active_dap_session()
   local ok, dap = pcall(require, "dap")
@@ -23,12 +27,20 @@ end
 local function guard_no_active_session()
   if has_active_dap_session() then
     vim.notify(
-      "[DAP] A session is already active. Use <leader>dx to terminate, <leader>dR to restart, or <leader>dA to re-run the last autotest after closing the current one.",
+      "[DAP] A session is already active. Use <leader>dx to terminate, <leader>dR to restart, or <leader>dA/<leader>dJ to re-run the last autotest/javascript after closing the current one.",
       vim.log.levels.WARN
     )
     return true
   end
   return false
+end
+
+local function maybe_engine_arg()
+  local engine = os.getenv "ENGINE"
+  if engine and engine ~= "" then
+    return "-engine:" .. engine
+  end
+  return nil
 end
 
 -- Simple shell-style splitter: honours single and double quotes
@@ -148,6 +160,10 @@ local function _run_autotest(category)
   end
   local instance = os.getenv "INSTANCE" or "autotest"
   local args = { "javascript", "-instance:" .. instance }
+  local engine_arg = maybe_engine_arg()
+  if engine_arg then
+    table.insert(args, engine_arg)
+  end
   local cat = (category or ""):match("^%s*(.-)%s*$")
   if cat ~= "" then
     -- Only add -arg when a non-empty category was provided; an empty/blank input means "run all tests".
@@ -181,4 +197,49 @@ function M.run_last_autotest()
   end
   require("dap").run(_last_autotest_cfg)
 end
+
+-- Build and run a JavaScript file under nlserver javascript (no cwd change)
+local function _run_javascript(path)
+  if guard_no_active_session() then return end
+  local nl = os.getenv "NL_PATH"
+  if not nl or nl == "" then
+    vim.notify("[DAP] NL_PATH is not set", vim.log.levels.ERROR)
+    return
+  end
+  local instance = os.getenv "INSTANCE" or "autotest"
+  local args = { "javascript", "-instance:" .. instance }
+  local engine_arg = maybe_engine_arg()
+  if engine_arg then
+    table.insert(args, engine_arg)
+  end
+  table.insert(args, "-file")
+  table.insert(args, path)
+  local cfg = {
+    name    = "JavaScript" .. (path and path ~= "" and (" [" .. path .. "]") or ""),
+    type    = "gdb",
+    request = "launch",
+    program = resolve_nlserver(),
+    args    = args,
+    cwd     = vim.fn.fnamemodify(nl, ":h"),
+  }
+  _last_javascript_path = path
+  _last_javascript_cfg = cfg
+  require("dap").run(cfg)
+end
+
+function M.run_javascript()
+  local path = vim.fn.input("JavaScript file: ", _last_javascript_path or "", "file")
+  path = (path or ""):match("^%s*(.-)%s*$")
+  if path == "" then return end
+  _run_javascript(path)
+end
+
+function M.run_last_javascript()
+  if not _last_javascript_cfg then
+    vim.notify("[DAP] No previous JavaScript run – use <leader>dj first", vim.log.levels.WARN)
+    return
+  end
+  require("dap").run(_last_javascript_cfg)
+end
+
 return M

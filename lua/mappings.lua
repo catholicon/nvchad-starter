@@ -27,6 +27,8 @@ map("n", "<leader>dl", function() require("configs.dap").run_last() end,        
 map("n", "<leader>dL", function() require("dap").run_last() end,                     { desc = "DAP re-run last DAP config" })
 map("n", "<leader>da", function() require("configs.dap").run_autotest() end,        { desc = "DAP autotest prompt" })
 map("n", "<leader>dA", function() require("configs.dap").run_last_autotest() end,    { desc = "DAP re-run last autotest" })
+map("n", "<leader>dj", function() require("configs.dap").run_javascript() end,       { desc = "DAP run JavaScript file" })
+map("n", "<leader>dJ", function() require("configs.dap").run_last_javascript() end,  { desc = "DAP re-run last JavaScript file" })
 map("n", "<leader>dx", function() require("dap").terminate() end,                   { desc = "DAP terminate session" })
 map("n", "<leader>dR", function() require("dap").restart() end,                    { desc = "DAP restart session" })
 
