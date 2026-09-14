@@ -77,13 +77,41 @@ return {
   -- DAP (debugger)
   {
     "mfussenegger/nvim-dap",
+    lazy = true, -- adapter setup is split out so helper functions don't trigger a circular load
     dependencies = {
       {
         "rcarriga/nvim-dap-ui",
         dependencies = { "nvim-neotest/nvim-nio" },
         config = function()
           local dap, dapui = require "dap", require "dapui"
-          dapui.setup()
+          dapui.setup {
+            layouts = {
+              {
+                elements = {
+                  { id = "scopes", size = 0.45 },
+                  { id = "breakpoints", size = 0.20 },
+                  { id = "stacks", size = 0.20 },
+                  { id = "watches", size = 0.15 },
+                },
+                size = 40,
+                position = "left",
+              },
+              {
+                elements = {
+                  { id = "repl", size = 0.60 },
+                  { id = "console", size = 0.40 },
+                },
+                size = 0.30,
+                position = "bottom",
+              },
+            },
+            element_mappings = {
+              stacks = {
+                open = "<CR>",   -- press Enter on a frame to jump to its source
+                expand = "o",    -- press o to expand/collapse the thread tree
+              },
+            },
+          }
           dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
           dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
           dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
@@ -91,7 +119,7 @@ return {
       },
     },
     config = function()
-      require "configs.dap"
+      require "configs.dap_adapters"
     end,
   },
 
