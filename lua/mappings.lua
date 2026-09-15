@@ -59,9 +59,3 @@ map("n", "<leader>2",  function() harpoon:list():select(2) end,        { desc = 
 map("n", "<leader>3",  function() harpoon:list():select(3) end,        { desc = "Harpoon file 3" })
 map("n", "<leader>4",  function() harpoon:list():select(4) end,        { desc = "Harpoon file 4" })
 
--- mapping augment commands
-map({"n", "v"}, "<leader>ac", ":Augment chat<CR>")
-map("n", "<leader>an", ":Augment chat-new<CR>")
-map("n", "<leader>at", ":Augment chat-toggle<CR>")
-
--- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")

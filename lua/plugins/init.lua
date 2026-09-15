@@ -5,9 +5,9 @@ return {
     opts = require "configs.conform",
   },
 
-  -- Setup augment code
+  -- GitHub Copilot
   {
-    "augmentcode/augment.vim",
+    "github/copilot.vim",
     lazy = false,
   },
   --
