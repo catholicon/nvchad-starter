@@ -13,8 +13,18 @@ o.scrolloff = 10
 o.colorcolumn = "100"
 
 -- Visualize whitespace characters
-o.list = true
-o.listchars = "space:⋅,eol:↵"
+vim.opt.list = true
+vim.opt.listchars = {
+  space = " ",
+  tab = "  ",
+  eol = "↵",
+}
 
 -- Thicker, more visible window separators
 o.fillchars = "vert:┃,horiz:━,horizup:┻,horizdown:┳,vertleft:┫,vertright:┣,verthoriz:╋"
+
+-- tab management
+o.expandtab = true
+o.tabstop = 2
+o.shiftwidth = 2
+o.softtabstop = 2
