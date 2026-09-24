@@ -39,6 +39,22 @@ map("n", "<leader>pp", "<cmd>PresentStart<CR>", { desc = "Start presentation" })
 vim.keymap.del({ "n", "t" }, "<A-v>")
 vim.keymap.del({ "n", "t" }, "<A-h>")
 vim.keymap.del({ "n", "t" }, "<A-i>")
+vim.keymap.del("n", "<leader>h")
+vim.keymap.del("n", "<leader>v")
+
+-- toggleable
+map({ "n", "t" }, "<leader>v", function()
+  require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
+end, { desc = "terminal toggleable vertical term" })
+
+map({ "n", "t" }, "<leader>h", function()
+  require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
+end, { desc = "terminal toggleable horizontal term" })
+
+map({ "n", "t" }, "<leader>i", function()
+  require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
+end, { desc = "terminal toggle floating term" })
+
 
 -- Replace <C-h/j/k/l> window navigation (terminal conflicts) with <A-h/j/k/l>
 vim.keymap.del("n", "<C-h>")
